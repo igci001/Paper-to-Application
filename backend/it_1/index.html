@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake Plugin Spiel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+    .game-container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 60px;
+      background-color: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      border-right: 2px solid #ccc;
+    }
+    .sidebar button, .sidebar img {
+      margin: 20px 0;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+    .main-game {
+      flex: 1;
+      position: relative;
+      background-color: white;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #eee;
+      padding: 5px 10px;
+      border-bottom: 2px solid #ccc;
+    }
+    .top-bar .left, .top-bar .center, .top-bar .right {
+      display: flex;
+      align-items: center;
+    }
+    .top-bar .icon {
+      margin: 0 5px;
+    }
+    .snake-area {
+      position: absolute;
+      top: 40px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      background-image: radial-gradient(#e1e1e1 1px, transparent 0);
+      background-size: 20px 20px;
+    }
+    .snake-wall {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #d0f0d0;
+      border-right: 2px solid #aaa;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .snake-head {
+      width: 20px;
+      height: 20px;
+      background-color: green;
+      border-radius: 50%;
+      position: absolute;
+      top: 120px;
+      left: 90px;
+    }
+    .fruit {
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .fruit::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 8px;
+      width: 4px;
+      height: 6px;
+      background: green;
+      border-radius: 2px;
+    }
+    .top-bar .crown, .top-bar .apple {
+      width: 20px;
+      height: 20px;
+    }
+    .close-btn {
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="game-container">
+  <div class="sidebar">
+    <button title="Einstellungen">⚙️</button>
+    <button title="Neustart">↻</button>
+  </div>
+  <div class="main-game">
+    <div class="top-bar">
+      <div class="left">
+        <img src="crown.png" alt="Krone" class="crown">
+        <span>11</span>
+      </div>
+      <div class="center">
+        <img src="apple.png" alt="Apfel" class="apple">
+        <span>2</span>
+      </div>
+      <div class="right">
+        <span class="close-btn">X</span>
+      </div>
+    </div>
+    <div class="snake-area">
+      <div class="snake-wall">
+        <!-- Wände -->
+      </div>
+      <div class="snake-head"></div>
+      <!-- Früchte im Spielfeld -->
+      <div class="fruit" style="top: 100px; left: 140px;"></div>
+      <div class="fruit" style="top: 200px; left: 300px;"></div>
+      <div class="fruit" style="top: 300px; left: 400px;"></div>
+      <div class="fruit" style="top: 400px; left: 150px;"></div>
+      <div class="fruit" style="top: 500px; left: 500px;"></div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <button title="Shop">👕</button>
+    <button title="Ton">🔊</button>
+  </div>
+</div>
+</body>
+</html>

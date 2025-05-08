@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Plugin Spiel</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+        }
+        .game-container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 60px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            border-right: 2px solid #ccc;
+        }
+        .sidebar button {
+            margin: 20px 0;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .main-game {
+            flex: 1;
+            position: relative;
+            background-color: white;
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #eee;
+            padding: 5px 10px;
+            border-bottom: 2px solid #ccc;
+        }
+        .top-bar .left, .top-bar .center, .top-bar .right {
+            display: flex;
+            align-items: center;
+        }
+        .top-bar .left img,
+        .top-bar .center img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        .snake-area {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 40px);
+            background-image: radial-gradient(#e1e1e1 1px, transparent 0);
+            background-size: 20px 20px;
+            overflow: hidden;
+        }
+        .snake-segment {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: green;
+            border-radius: 4px;
+        }
+        .fruit {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .close-btn {
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="sidebar">
+        <button onclick="resetGame()">↻</button>
+    </div>
+    <div class="main-game">
+        <div class="top-bar">
+            <div class="left">
+                <img src="https://img.icons8.com/emoji/48/crown-emoji.png" alt="Krone">
+                <span id="highscore">0</span>
+            </div>
+            <div class="center">
+                <img src="https://img.icons8.com/emoji/48/red-apple.png" alt="Apfel">
+                <span id="score">0</span>
+            </div>
+            <div class="right">
+                <span class="close-btn" onclick="alert('Schließen')">X</span>
+            </div>
+        </div>
+        <div class="snake-area" id="gameArea"></div>
+    </div>
+    <div class="sidebar">
+        <button>👕</button>
+        <button>🔊</button>
+    </div>
+</div>
+<script>
+    const gameArea = document.getElementById("gameArea");
+    const scoreDisplay = document.getElementById("score");
+    const highscoreDisplay = document.getElementById("highscore");
+    let snake = [{ x: 5, y: 5 }];
+    let direction = { x: 1, y: 0 };
+    let fruit = spawnFruit();
+    let score = 0;
+    let highscore = 0;
+    const gridSize = 20;
+    const rows = Math.floor(gameArea.offsetHeight / gridSize);
+    const cols = Math.floor(gameArea.offsetWidth / gridSize);
+    function draw() {
+        gameArea.innerHTML = "";
+        // Snake
+        snake.forEach((segment, index) => {
+            const el = document.createElement("div");
+            el.className = "snake-segment";
+            el.style.left = segment.x * gridSize + "px";
+            el.style.top = segment.y * gridSize + "px";
+            gameArea.appendChild(el);
+        });
+        // Fruit
+        const fruitEl = document.createElement("div");
+        fruitEl.className = "fruit";
+        fruitEl.style.left = fruit.x * gridSize + "px";
+        fruitEl.style.top = fruit.y * gridSize + "px";
+        gameArea.appendChild(fruitEl);
+    }
+    function spawnFruit() {
+        let newFruit;
+        do {
+            newFruit = {
+                x: Math.floor(Math.random() * cols),
+                y: Math.floor(Math.random() * rows),
+            };
+        } while (snake.some(s => s.x === newFruit.x && s.y === newFruit.y));
+        return newFruit;
+    }
+    function move() {
+        const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+        // Wall collision
+        if (
+            head.x < 0 || head.y < 0 ||
+            head.x >= cols || head.y >= rows ||
+            snake.some(seg => seg.x === head.x && seg.y === head.y)
+        ) {
+            alert("Game Over!");
+            resetGame();
+            return;
+        }
+        snake.unshift(head);
+        // Fruit eaten
+        if (head.x === fruit.x && head.y === fruit.y) {
+            score++;
+            scoreDisplay.textContent = score;
+            if (score > highscore) {
+                highscore = score;
+                highscoreDisplay.textContent = highscore;
+            }
+            fruit = spawnFruit();
+        } else {
+            snake.pop();
+        }
+        draw();
+    }
+    function changeDirection(e) {
+        switch (e.key) {
+            case "ArrowUp":
+                if (direction.y !== 1) direction = { x: 0, y: -1 };
+                break;
+            case "ArrowDown":
+                if (direction.y !== -1) direction = { x: 0, y: 1 };
+                break;
+            case "ArrowLeft":
+                if (direction.x !== 1) direction = { x: -1, y: 0 };
+                break;
+            case "ArrowRight":
+                if (direction.x !== -1) direction = { x: 1, y: 0 };
+                break;
+        }
+    }
+    function resetGame() {
+        snake = [{ x: 5, y: 5 }];
+        direction = { x: 1, y: 0 };
+        fruit = spawnFruit();
+        score = 0;
+        scoreDisplay.textContent = score;
+    }
+    document.addEventListener("keydown", changeDirection);
+    draw();
+    setInterval(move, 200);
+</script>
+</body>
+</html>
