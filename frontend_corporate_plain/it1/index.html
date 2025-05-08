@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game UI</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-color: #d1fae5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar {
+            width: 60px;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            gap: 20px;
+        }
+        .game-area {
+            flex: 1;
+            position: relative;
+            background-color: #ecfdf5;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: calc(100vh - 56px);
+        }
+        .snake-segment {
+            width: 20px;
+            height: 20px;
+            background-color: #047857;
+            margin: 2px;
+            border-radius: 4px;
+        }
+        .snake-head {
+            background-color: #facc15;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        .apple {
+            position: absolute;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div><span>👑</span> <strong id="highScore">0</strong></div>
+    <div><span>🍎</span> <strong id="score">0</strong></div>
+    <button onclick="location.reload()">❌</button>
+</div>
+
+<div class="container">
+    <!-- Linke Sidebar -->
+    <div class="sidebar">
+        <div>⚙️</div>
+        <div style="transform: rotate(-90deg); cursor:pointer" onclick="location.reload()">🔄</div>
+    </div>
+
+    <!-- Spielfeld -->
+    <div class="game-area" id="gameArea"></div>
+
+    <!-- Rechte Sidebar -->
+    <div class="sidebar">
+        <div>👕</div>
+        <div>🔊</div>
+    </div>
+</div>
+
+<script>
+    const gameArea = document.getElementById('gameArea');
+    const snakeContainer = document.getElementById('snake');
+
+    // Beispielhafte Snake
+    const snakeSegments = 10;
+    for (let i = 0; i < snakeSegments; i++) {
+        const seg = document.createElement('div');
+        seg.classList.add('snake-segment');
+        seg.style.position = 'absolute';
+        seg.style.top = `${20 + i * 22}px`;
+        seg.style.left = `20px`;
+        snakeContainer.appendChild(seg);
+    }
+
+    // Snake-Kopf
+    const head = document.createElement('div');
+    head.classList.add('snake-segment', 'snake-head');
+    head.innerText = '🐍';
+    head.style.position = 'absolute';
+    head.style.top = `${20 + snakeSegments * 22}px`;
+    head.style.left = `20px`;
+    snakeContainer.appendChild(head);
+
+    // Äpfel generieren
+    for (let i = 0; i < 8; i++) {
+        const apple = document.createElement('div');
+        apple.classList.add('apple');
+        apple.style.top = `${Math.random() * 80 + 10}%`;
+        apple.style.left = `${Math.random() * 80 + 10}%`;
+        apple.innerText = '🍎';
+        gameArea.appendChild(apple);
+    }
+</script>
+</body>
+</html>
