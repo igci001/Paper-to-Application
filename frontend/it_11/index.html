@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>Snake Plugin Spiel</title>
+    <style>
+
+        * { box-sizing: border-box; }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f9f9f9;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 100vh;
+
+        }
+
+        .game-container {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            width: 100vw;
+
+            height: 100vh;
+
+            position: relative;
+
+        }
+
+        .snake-area {
+
+            position: relative;
+
+            width: 90vmin;
+
+            height: 90vmin;
+
+            background-color: white;
+
+            display: grid;
+
+            border: 2px solid #ccc;
+
+            background-image:
+
+                    linear-gradient(to right, #ddd 1px, transparent 1px),
+
+                    linear-gradient(to bottom, #ddd 1px, transparent 1px);
+
+            background-size: calc(100% / var(--cols)) calc(100% / var(--rows));
+
+        }
+
+        .snake-segment, .fruit {
+
+            position: absolute;
+
+            z-index: 1;
+
+        }
+
+        #scoreboard {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            width: 90vmin;
+
+            margin-bottom: 10px;
+
+        }
+
+        #startMenu, #gameOverScreen, #shop {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: white;
+
+            display: none;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 10;
+
+        }
+
+        #startMenu { display: flex; }
+
+        .color-option {
+
+            width: 30px;
+
+            height: 30px;
+
+            border-radius: 4px;
+
+            margin: 5px;
+
+            display: inline-block;
+
+            cursor: pointer;
+
+            border: 2px solid transparent;
+
+        }
+
+        .color-option.locked {
+
+            opacity: 0.3;
+
+            cursor: not-allowed;
+
+        }
+
+        .color-option.selected {
+
+            border: 2px solid black;
+
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div id="scoreboard">
+        <div>Highscore: <span id="highscore">0</span></div>
+        <div>Score: <span id="score">0</span></div>
+    </div>
+    <div class="snake-area" id="gameArea"></div>
+    <!-- Start-Menü -->
+    <div id="startMenu">
+        <h1>Snake Spiel</h1>
+        <label for="gridSizeSelect">Spielfeldgröße:</label>
+        <select id="gridSizeSelect">
+            <option value="10">10 x 10</option>
+            <option value="20" selected>20 x 20</option>
+            <option value="30">30 x 30</option>
+        </select>
+        <button onclick="startGame()">Spiel starten</button>
+        <button onclick="openShop()">Shop</button>
+    </div>
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen">
+        <h2>Game Over</h2>
+        <p>Score: <span id="finalScore">0</span></p>
+        <p>Highscore: <span id="finalHighscore">0</span></p>
+        <label for="gridSizeSelect2">Spielfeldgröße:</label>
+        <select id="gridSizeSelect2">
+            <option value="10">10 x 10</option>
+            <option value="20" selected>20 x 20</option>
+            <option value="30">30 x 30</option>
+        </select>
+        <button onclick="restartGame()">Neustart</button>
+        <button onclick="openShopFromMenu()">Shop öffnen</button>
+    </div>
+    <!-- Shop -->
+    <div id="shop">
+        <h2>Shop</h2>
+        <p>Wähle deine Farben:</p>
+        <div id="snakeColors"><h3>Schlange</h3></div>
+        <div id="appleColors"><h3>Apfel</h3></div>
+        <button onclick="closeShop()">Zurück</button>
+    </div>
+</div>
+<script>
+
+    const gameArea = document.getElementById("gameArea");
+
+    const scoreDisplay = document.getElementById("score");
+
+    const highscoreDisplay = document.getElementById("highscore");
+
+    const startMenu = document.getElementById("startMenu");
+
+    const gameOverScreen = document.getElementById("gameOverScreen");
+
+    const finalScoreEl = document.getElementById("finalScore");
+
+    const finalHighscoreEl = document.getElementById("finalHighscore");
+
+    const shop = document.getElementById("shop");
+
+    const gridSelect = document.getElementById("gridSizeSelect");
+
+    const gridSelect2 = document.getElementById("gridSizeSelect2");
+
+    let snake = [];
+
+    let direction = { x: 1, y: 0 };
+
+    let fruit = null;
+
+    let score = 0;
+
+    let highscore = 0;
+
+    let rows = 20;
+
+    let cols = 20;
+
+    let gridSizePx = 0;
+
+    let gameInterval = null;
+
+    let gamePaused = true;
+
+    let snakeColor = "green";
+
+    let appleColor = "red";
+
+    const snakeUnlocks = [
+
+        { color: "green", requiredScore: 0 },
+
+        { color: "yellow", requiredScore: 5 },
+
+        { color: "blue", requiredScore: 10 },
+
+        { color: "purple", requiredScore: 15 },
+
+        { color: "black", requiredScore: 25 }
+
+    ];
+
+    const appleUnlocks = [
+
+        { color: "red", requiredScore: 0 },
+
+        { color: "orange", requiredScore: 5 },
+
+        { color: "pink", requiredScore: 10 },
+
+        { color: "cyan", requiredScore: 15 },
+
+        { color: "brown", requiredScore: 25 }
+
+    ];
+
+    function loadFromStorage() {
+
+        const storedHighscore = localStorage.getItem("snakeHighscore");
+
+        const storedSnakeColor = localStorage.getItem("snakeColor");
+
+        const storedAppleColor = localStorage.getItem("appleColor");
+
+        if (storedHighscore !== null) {
+
+            highscore = parseInt(storedHighscore);
+
+            highscoreDisplay.textContent = highscore;
+
+        }
+
+        if (storedSnakeColor) snakeColor = storedSnakeColor;
+
+        if (storedAppleColor) appleColor = storedAppleColor;
+
+    }
+
+    function saveToStorage() {
+
+        localStorage.setItem("snakeHighscore", highscore);
+
+        localStorage.setItem("snakeColor", snakeColor);
+
+        localStorage.setItem("appleColor", appleColor);
+
+    }
+
+    function updateGridSize() {
+
+        const minDim = Math.min(gameArea.clientWidth, gameArea.clientHeight);
+
+        gridSizePx = minDim / cols;
+
+        gameArea.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+        gameArea.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+        gameArea.style.setProperty('--cols', cols);
+
+        gameArea.style.setProperty('--rows', rows);
+
+    }
+
+    function draw() {
+
+        gameArea.innerHTML = "";
+
+        updateGridSize();
+
+        snake.forEach(segment => {
+
+            const el = document.createElement("div");
+
+            el.className = "snake-segment";
+
+            el.style.width = el.style.height = gridSizePx + "px";
+
+            el.style.left = segment.x * gridSizePx + "px";
+
+            el.style.top = segment.y * gridSizePx + "px";
+
+            el.style.backgroundColor = snakeColor;
+
+            gameArea.appendChild(el);
+
+        });
+
+        const fruitEl = document.createElement("div");
+
+        fruitEl.className = "fruit";
+
+        fruitEl.style.width = fruitEl.style.height = gridSizePx + "px";
+
+        fruitEl.style.left = fruit.x * gridSizePx + "px";
+
+        fruitEl.style.top = fruit.y * gridSizePx + "px";
+
+        fruitEl.style.backgroundColor = appleColor;
+
+        gameArea.appendChild(fruitEl);
+
+    }
+
+    function spawnFruit() {
+
+        let newFruit;
+
+        do {
+
+            newFruit = {
+
+                x: Math.floor(Math.random() * cols),
+
+                y: Math.floor(Math.random() * rows)
+
+            };
+
+        } while (snake.some(s => s.x === newFruit.x && s.y === newFruit.y));
+
+        return newFruit;
+
+    }
+
+    function move() {
+
+        if (gamePaused) return;
+
+        const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+        if (
+
+            head.x < 0 || head.y < 0 ||
+
+            head.x >= cols || head.y >= rows ||
+
+            snake.some(seg => seg.x === head.x && seg.y === head.y)
+
+        ) {
+
+            endGame();
+
+            return;
+
+        }
+
+        snake.unshift(head);
+
+        if (head.x === fruit.x && head.y === fruit.y) {
+
+            score++;
+
+            scoreDisplay.textContent = score;
+
+            if (score > highscore) {
+
+                highscore = score;
+
+                highscoreDisplay.textContent = highscore;
+
+                saveToStorage();
+
+            }
+
+            fruit = spawnFruit();
+
+        } else {
+
+            snake.pop();
+
+        }
+
+        draw();
+
+    }
+
+    function changeDirection(e) {
+
+        switch (e.key) {
+
+            case "ArrowUp": if (direction.y !== 1) direction = { x: 0, y: -1 }; break;
+
+            case "ArrowDown": if (direction.y !== -1) direction = { x: 0, y: 1 }; break;
+
+            case "ArrowLeft": if (direction.x !== 1) direction = { x: -1, y: 0 }; break;
+
+            case "ArrowRight": if (direction.x !== -1) direction = { x: 1, y: 0 }; break;
+
+        }
+
+    }
+
+    function startGame() {
+
+        rows = cols = parseInt(gridSelect.value);
+
+        gamePaused = false;
+
+        startMenu.style.display = "none";
+
+        gameOverScreen.style.display = "none";
+
+        shop.style.display = "none";
+
+        snake = [{ x: 2, y: 2 }];
+
+        direction = { x: 1, y: 0 };
+
+        fruit = spawnFruit();
+
+        score = 0;
+
+        scoreDisplay.textContent = score;
+
+        updateGridSize();
+
+        draw();
+
+    }
+
+    function endGame() {
+
+        gamePaused = true;
+
+        finalScoreEl.textContent = score;
+
+        finalHighscoreEl.textContent = highscore;
+
+        gameOverScreen.style.display = "flex";
+
+        saveToStorage();
+
+    }
+
+    function restartGame() {
+
+        gridSelect.value = gridSelect2.value;
+
+        startGame();
+
+    }
+
+    function openShop() {
+
+        gamePaused = true;
+
+        shop.style.display = "flex";
+
+        drawShopColors();
+
+    }
+
+    function closeShop() {
+
+        shop.style.display = "none";
+
+        if (!startMenu.style.display || startMenu.style.display === "none") {
+
+            gamePaused = false;
+
+        }
+
+    }
+
+    function openShopFromMenu() {
+
+        startMenu.style.display = "none";
+
+        gameOverScreen.style.display = "none";
+
+        openShop();
+
+    }
+
+    function drawShopColors() {
+
+        const snakeContainer = document.getElementById("snakeColors");
+
+        const appleContainer = document.getElementById("appleColors");
+
+        snakeContainer.innerHTML = "<h3>Schlange</h3>";
+
+        appleContainer.innerHTML = "<h3>Apfel</h3>";
+
+        for (const { color, requiredScore } of snakeUnlocks) {
+
+            const snakeOption = createColorOption(color, requiredScore, "snake");
+
+            snakeContainer.appendChild(snakeOption);
+
+        }
+
+        for (const { color, requiredScore } of appleUnlocks) {
+
+            const appleOption = createColorOption(color, requiredScore, "apple");
+
+            appleContainer.appendChild(appleOption);
+
+        }
+
+    }
+
+    function createColorOption(color, requiredScore, type) {
+
+        const div = document.createElement("div");
+
+        div.className = "color-option";
+
+        div.style.backgroundColor = color;
+
+        if (highscore >= requiredScore) {
+
+            div.onclick = () => {
+
+                if (type === "snake") {
+
+                    snakeColor = color;
+
+                } else {
+
+                    appleColor = color;
+
+                }
+
+                saveToStorage();
+
+                draw();
+
+                drawShopColors();
+
+            };
+
+        } else {
+
+            div.classList.add("locked");
+
+            div.title = `Freischaltbar ab Highscore ${requiredScore}`;
+
+        }
+
+        if ((type === "snake" && snakeColor === color) || (type === "apple" && appleColor === color)) {
+
+            div.classList.add("selected");
+
+        }
+
+        return div;
+
+    }
+
+    document.addEventListener("keydown", changeDirection);
+
+    window.onload = () => {
+
+        loadFromStorage();
+
+        drawShopColors();
+
+        gameInterval = setInterval(move, 200);
+
+    };
+
+    window.onresize = updateGridSize;
+</script>
+</body>
+</html>

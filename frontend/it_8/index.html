@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake Plugin Spiel</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .snake-area {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            display: grid;
+            grid-template-columns: repeat(20, 20px);
+            grid-template-rows: repeat(20, 20px);
+            border: 2px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .snake-area::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(#ccc 1px, transparent 1px),
+            linear-gradient(90deg, #ccc 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .snake-segment, .fruit {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            z-index: 1;
+        }
+        #scoreboard {
+            display: flex;
+            justify-content: space-between;
+            width: 400px;
+            margin-bottom: 10px;
+        }
+        #startMenu, #gameOverScreen, #shop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        #startMenu { display: flex; }
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .color-option.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .color-option.selected {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div id="scoreboard">
+        <div>Highscore: <span id="highscore">0</span></div>
+        <div>Score: <span id="score">0</span></div>
+    </div>
+    <div class="snake-area" id="gameArea"></div>
+    <!-- Start-Menü -->
+    <div id="startMenu">
+        <h1>Snake Spiel</h1>
+        <button onclick="startGame()">Spiel starten</button>
+        <button onclick="openShop()">Shop</button>
+    </div>
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen">
+        <h2>Game Over</h2>
+        <p>Score: <span id="finalScore">0</span></p>
+        <p>Highscore: <span id="finalHighscore">0</span></p>
+        <button onclick="restartGame()">Neustart</button>
+        <button onclick="openShopFromMenu()">Shop öffnen</button>
+    </div>
+    <!-- Shop -->
+    <div id="shop">
+        <h2>Shop</h2>
+        <p>Wähle deine Farben:</p>
+        <div id="snakeColors"><h3>Schlange</h3></div>
+        <div id="appleColors"><h3>Apfel</h3></div>
+        <button onclick="closeShop()">Zurück</button>
+    </div>
+</div>
+<script>
+    const gameArea = document.getElementById("gameArea");
+    const scoreDisplay = document.getElementById("score");
+    const highscoreDisplay = document.getElementById("highscore");
+    const startMenu = document.getElementById("startMenu");
+    const gameOverScreen = document.getElementById("gameOverScreen");
+    const finalScoreEl = document.getElementById("finalScore");
+    const finalHighscoreEl = document.getElementById("finalHighscore");
+    const shop = document.getElementById("shop");
+    let snake = [];
+    let direction = { x: 1, y: 0 };
+    let fruit = null;
+    let score = 0;
+    let highscore = 0;
+    const gridSize = 20;
+    const rows = 20;
+    const cols = 20;
+    let gameInterval = null;
+    let gamePaused = true;
+    let snakeColor = "green";
+    let appleColor = "red";
+    const unlocks = [
+        { color: "yellow", requiredScore: 5 },
+        { color: "blue", requiredScore: 10 },
+        { color: "purple", requiredScore: 15 },
+        { color: "orange", requiredScore: 20 },
+        { color: "black", requiredScore: 25 }
+    ];
+    function initGame() {
+        drawShopColors();
+    }
+    function draw() {
+        gameArea.innerHTML = "";
+        snake.forEach(segment => {
+            const el = document.createElement("div");
+            el.className = "snake-segment";
+            el.style.left = `${segment.x * gridSize}px`;
+            el.style.top = `${segment.y * gridSize}px`;
+            el.style.backgroundColor = snakeColor;
+            gameArea.appendChild(el);
+        });
+        const fruitEl = document.createElement("div");
+        fruitEl.className = "fruit";
+        fruitEl.style.left = `${fruit.x * gridSize}px`;
+        fruitEl.style.top = `${fruit.y * gridSize}px`;
+        fruitEl.style.backgroundColor = appleColor;
+        gameArea.appendChild(fruitEl);
+    }
+    function spawnFruit() {
+        let newFruit;
+        do {
+            newFruit = {
+                x: Math.floor(Math.random() * cols),
+                y: Math.floor(Math.random() * rows)
+            };
+        } while (snake.some(s => s.x === newFruit.x && s.y === newFruit.y));
+        return newFruit;
+    }
+    function move() {
+        if (gamePaused) return;
+        const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+        if (
+            head.x < 0 || head.y < 0 ||
+            head.x >= cols || head.y >= rows ||
+            snake.some(seg => seg.x === head.x && seg.y === head.y)
+        ) {
+            endGame();
+            return;
+        }
+        snake.unshift(head);
+        if (head.x === fruit.x && head.y === fruit.y) {
+            score++;
+            scoreDisplay.textContent = score;
+            if (score > highscore) {
+                highscore = score;
+                highscoreDisplay.textContent = highscore;
+            }
+            fruit = spawnFruit();
+        } else {
+            snake.pop();
+        }
+        draw();
+    }
+    function changeDirection(e) {
+        switch (e.key) {
+            case "ArrowUp": if (direction.y !== 1) direction = { x: 0, y: -1 }; break;
+            case "ArrowDown": if (direction.y !== -1) direction = { x: 0, y: 1 }; break;
+            case "ArrowLeft": if (direction.x !== 1) direction = { x: -1, y: 0 }; break;
+            case "ArrowRight": if (direction.x !== -1) direction = { x: 1, y: 0 }; break;
+        }
+    }
+    function startGame() {
+        startMenu.style.display = "none";
+        gameOverScreen.style.display = "none";
+        shop.style.display = "none";
+        snake = [{ x: 5, y: 5 }];
+        direction = { x: 1, y: 0 };
+        fruit = spawnFruit();
+        score = 0;
+        scoreDisplay.textContent = score;
+        gamePaused = false;
+        draw();
+    }
+    function endGame() {
+        gamePaused = true;
+        finalScoreEl.textContent = score;
+        finalHighscoreEl.textContent = highscore;
+        gameOverScreen.style.display = "flex";
+    }
+    function restartGame() {
+        gameOverScreen.style.display = "none";
+        startGame();
+    }
+    function openShop() {
+        gamePaused = true;
+        shop.style.display = "flex";
+        drawShopColors();
+    }
+    function closeShop() {
+        shop.style.display = "none";
+        if (!startMenu.style.display || startMenu.style.display === "none") {
+            gamePaused = false;
+        }
+    }
+    function openShopFromMenu() {
+        startMenu.style.display = "none";
+        gameOverScreen.style.display = "none";
+        openShop();
+    }
+    function drawShopColors() {
+        const snakeContainer = document.getElementById("snakeColors");
+        const appleContainer = document.getElementById("appleColors");
+        snakeContainer.innerHTML = "<h3>Schlange</h3>";
+        appleContainer.innerHTML = "<h3>Apfel</h3>";
+        for (const { color, requiredScore } of unlocks) {
+            const snakeOption = createColorOption(color, requiredScore, "snake");
+            const appleOption = createColorOption(color, requiredScore, "apple");
+            snakeContainer.appendChild(snakeOption);
+            appleContainer.appendChild(appleOption);
+        }
+    }
+    function createColorOption(color, requiredScore, type) {
+        const div = document.createElement("div");
+        div.className = "color-option";
+        div.style.backgroundColor = color;
+        if (highscore >= requiredScore) {
+            div.onclick = () => {
+                if (type === "snake") {
+                    snakeColor = color;
+                } else {
+                    appleColor = color;
+                }
+                draw();
+                drawShopColors();
+            };
+        } else {
+            div.classList.add("locked");
+            div.title = `Freischaltbar ab Highscore ${requiredScore}`;
+        }
+        if ((type === "snake" && snakeColor === color) || (type === "apple" && appleColor === color)) {
+            div.classList.add("selected");
+        }
+        return div;
+    }
+    document.addEventListener("keydown", changeDirection);
+    window.onload = () => {
+        initGame();
+        gameInterval = setInterval(move, 200);
+    };
+</script>
+</body>
+</html>
