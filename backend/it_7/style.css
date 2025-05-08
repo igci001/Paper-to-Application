@@ -1,0 +1,78 @@
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.menu {
+  position: absolute;
+  background: white;
+  padding: 20px;
+  border: 2px solid #ccc;
+  text-align: center;
+  z-index: 10;
+}
+.menu button {
+  margin: 10px;
+  padding: 10px 20px;
+}
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar {
+  width: 100px;
+  background: #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.right-bar {
+  background: #ccc;
+}
+.score-box {
+  margin-top: 20px;
+}
+.snake-area {
+  display: grid;
+  background-image: linear-gradient(#e0e0e0 1px, transparent 1px),
+                    linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
+  position: relative;
+}
+.snake-segment {
+  background-color: green;
+  width: 100%;
+  height: 100%;
+}
+.fruit {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: red;
+}
+.color-options {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.color-option {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+.color-option.locked {
+  opacity: 0.3;
+  pointer-events: none;
+}
