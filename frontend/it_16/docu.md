@@ -1,30 +1,11 @@
-Prompt 15: Ich möchte die unterschiedlichen Iterationen meiner App über eine Navigation miteinander verbinden. Auf der linken Seite soll jeweils immer eine Liste mit den ganzen Versionen angezeigt werden, die einen direkt zur angeklickten Version bringt. Die Homepage ist auch eine Liste mit den unterschiedlichen Versionen. Meine Ordnerstruktur ist die, dass ich jeweils immer einen Order mit dem namen it_1, it_2, usw habe, in der eine HTML-Datei liegt.
-
-Generiere mir eine HTML-Datei für die Homepage und gibt mir an, wie ich jeweils die einzelnen HTML Dateien der Versionen ändern muss.
-
-Weiterhin nutze ich vanilla JS für meine Webseite mit .index referenzen. Wie Bündel ich diese zusammen sodass ich dies auf AWS in das S3 bucket pushen kann
-Antwort 15: Hier ist ein kompletter Vorschlag, wie du deine mehrere Versionen deiner App per Navigation verknüpfen, eine Übersichtsseite (Homepage) erstellen und deine App samt JavaScript für AWS S3-Deployment vorbereiten kannst.
-⸻
-🏠 1. HTML-Datei für die Homepage (index.html)
-Speichere diese Datei auf der obersten Ebene deines Projekts: <Code main.html>
-Hier ist ein kompletter Vorschlag, wie du deine mehrere Versionen deiner App per Navigation verknüpfen, eine Übersichtsseite (Homepage) erstellen und deine App samt JavaScript für AWS S3-Deployment vorbereiten kannst.
+Prompt 15: Hier ist mein Code: <Code it_15>
+Kannst du eine neue Version des spiels erstellen in der du die Optik der Nutzeroberflächen anpasst. Mach die Seite generell optisch anschaulicher.
+Beachte dabei, dass du die neue Version auch in die Versionsliste aufnimmst und die benennungskonvention beibehältst.
+Gib mir den neuen Code komplett als eine texteinheit wieder damit ich ihn kopieren kann und in meine IDE einfügen kann
 
 
-🔁 2. Jede Iteration anpassen (it_1/index.html, it_2/index.html, …)
-
-Füge in jeder Version eine Navigation auf der linken Seite hinzu, damit du zwischen den Versionen wechseln kannst. Beispiel für it_1/index.html:
-
-Du kannst diesen Block in jede andere Version kopieren und den <title> und <h1> anpassen. Achte bei relativen Pfaden auf die ../, damit die Navigation richtig funktioniert.
-
-<Code nav.html>
-
-📦 3. Vanilla JavaScript bündeln (optional)
-
-Wenn du dein JavaScript aufteilst (z. B. snake.js, menu.js, utils.js), kannst du sie mit einem simplen Build-Tool wie esbuild oder rollup bündeln, z. B. mit esbuild:
-Schritt-für-Schritt (optional):
-
-	1.	Installiere esbuild (wenn Node.js installiert ist):
+Antwort 15: 
 
 
-lessons learnt: Die Seiten sind kaputter als gedacht. Es fällt allerdings erst jetzt auf, wenn mehr als ein Elemtn auf dem Screen ist.
-Zeit zur Code-Generierung: 30sek
+lessons learnt: ChatGPT gibt die Skripte in der Antwort nicht mit an. Er  ignoriert die Anweisung, den kompletten Code zu generieren
+Zeit zur Code-Generierung: 1:45 sek
