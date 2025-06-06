@@ -5,4 +5,7 @@
 * Zeit zur Generation nimmt mit der Zeit enorm zu.
 * ChatGPT bricht die Codegenerierung von selbst ab, wenn der Output länger als ca. 4 Seiten ist. Um trotzdem den kompletten Code zu generieren, muss man bei der Generierung immer ganz nach unten Scrollen.
 * ChatGPT hat ab dem Termin am 06.06 entweder die Code-Generierung verbessert oder es gibt einem ein bessseres Model für die ersten Promps.
-* 
+* ChatGPT macht meist nur das, wonach gefragt wurde und macht dabei manche Dinge nicht, die impliziert gemacht werden sollten(z.B. dass die Schlange sich in den ersten Iterationen auch bewegen soll und nicht nur einfach erscheint), aber macht manchmal Dinge zu viel, die nicht gewollt waren(z.B. werden die Punkte des Blattes der Bildvorlage mit übernommen)
+* Teams auf dem Ipad stürtzt ab, wenn zu viel Text kopiert werden soll. Umweg über eine .txt Datei
+* ChatGPT ignoriert ab dem 06.06 mitunter Anweisungen, den Code komplett zu generieren, und lásst große Teile des Codes aus, wie zum Beispiel die Skripte.
+* Code Snippet changes sind sehr unübersichtlich, wenn man keine Ahnung vom Coden hat.
