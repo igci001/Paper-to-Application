@@ -3,4 +3,6 @@
 * Nicht zu viele Features auf einmal anfragen
 * Wenn zwischen dem generiertem Code (Promt würde sagen, nimm den letzten Code) und dem neuen Promt andere Promts liegen, referenziert er den alten Code nicht mehr korrekt, lässt also zum Teil Codefetzen weg
 * Zeit zur Generation nimmt mit der Zeit enorm zu.
+* ChatGPT bricht die Codegenerierung von selbst ab, wenn der Output länger als ca. 4 Seiten ist. Um trotzdem den kompletten Code zu generieren, muss man bei der Generierung immer ganz nach unten Scrollen.
+* ChatGPT hat ab dem Termin am 06.06 entweder die Code-Generierung verbessert oder es gibt einem ein bessseres Model für die ersten Promps.
 * 
