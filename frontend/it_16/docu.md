@@ -26,5 +26,5 @@ Schritt-für-Schritt (optional):
 	1.	Installiere esbuild (wenn Node.js installiert ist):
 
 
-lessons learnt: Die Seiten sind kaputter als gedacht.
+lessons learnt: Die Seiten sind kaputter als gedacht. Es fällt allerdings erst jetzt auf, wenn mehr als ein Elemtn auf dem Screen ist.
 Zeit zur Code-Generierung: 30sek
