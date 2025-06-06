@@ -1,0 +1,10 @@
+{
+  "hosted-zone:account=685687382396:domainName=emirhan-igci.me:region=eu-central-1": {
+    "Id": "/hostedzone/Z02296953FUP68812TTWU",
+    "Name": "emirhan-igci.me."
+  },
+  "hosted-zone:account=685687382396:domainName=emirhan-igci.me:region=us-east-1": {
+    "Id": "/hostedzone/Z02296953FUP68812TTWU",
+    "Name": "emirhan-igci.me."
+  }
+}
