@@ -6,7 +6,6 @@ Gib mir den code als komplette einheit, damit ich meinen alten code vollständig
 
 Antwort 15: 
  
-
-lessons learnt: Boost mit B funktioniert.
-                Wenn man nach einem Game Over in den Shop geht und dann ein neues Spiel startet, bleibt die Länge der Schlange von vor dem Game Over.
-Zeit zur Code-Generierung: 1:10
+Fazit: Fix funktioniert. Neue 
+lessons learnt: Wenn man nach einem Game Over in den Shop geht und dann ein neues Spiel startet, bleibt die Länge der Schlange von vor dem Game Over. Dieser Bug liegt schon seit Beginn vor aber fällt jetzt erst auf. Die Struktur der Applikation wurde hat somit Fehler, die nicht auffällig sind und die Menüs sind nicht robust.
+Zeit zur Code-Generierung: 1:10, ca. 400 lines of code

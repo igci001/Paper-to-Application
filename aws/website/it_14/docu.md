@@ -16,7 +16,8 @@ Natürlich! Hier ist dein vollständiger HTML/JS-Code deines Snake-Spiels, erwei
 3. Runden-Timer, der bei Spielstart beginnt, bei Game Over stoppt, angezeigt wird und in localStorage gespeichert wird.
    Du kannst diesen Code eins zu eins verwenden und deinen alten Code damit ersetzen:
 
-4. 
-5. Probleme: Snake bewegt sich so schnell, dass sie innerhalb eines Bruchteiles einer Sekunde gegen die Wand fährt und das Spiel beendet wird.
-6. Learnings bisher: ChatGPT versteht nicht intuitiv, was von ihm gewollt ist.
-7. Zeit zur Generierung: ca. 1 min.
+
+FAzit: Zeit zur Generierung: ca. 1 min.
+Snake bewegt sich so schnell, dass sie innerhalb eines Bruchteiles einer Sekunde gegen die Wand fährt und das Spiel beendet wird.
+Ein Blick in den Code zeigt, dass die KI die Standardgeschwindigkeit von 1 auf 200 hochgesetzt hat, weil sie in der Beschleinigungsfunktion 200/100 rechnet, um die doppelte Geschwindigkeit zu erhalten
+Lessons Learned: ChatGPT versteht nicht intuitiv, was von ihm gewollt ist und hat auch intern keine Möglichkeit den Code zu testen. Außerdem sind der KI nicht die Auswirkungen seines Handels im Ändern der Standardgeschwindigkeit ersichtlich und es ist auch nicht ersichtlich, wieso die Boost-Geschwindigkeit 200/100 sein muss und nicht einfach 2 sein kann. Eine Vermutung ist, dass in den zugrunde liegenden Vorlagen im Training Variablen für diese Werte vorhanden waren, diese bei uns allerdings nicht vorliegen, und die KI so keine Transferleistung bringen kann. 

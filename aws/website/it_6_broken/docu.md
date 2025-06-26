@@ -17,6 +17,8 @@ Natürlich! Ich habe deinen Snake-Code erweitert, um folgende Funktionen zu inte
    • Es gibt eine Standardfarbe (Schlange: Grün, Apfel: Rot) und fünf freischaltbare Farben, die beim Erreichen bestimmter Highscores verfügbar werden.
    • Du kannst jederzeit zur Standardfarbe zurückkehren
 
-Prompt: Bitte generiere für das Projekt die Dateien.
 
-Ausgabe: Generiert ein Zip Archiv mit drei Dateien
+
+Fazit: Der Code ist aufgeteilt in mehrere Bereiche. Nicht mehr der gesamte Code wird ausgegeben. Man muss also selbst die Fetzen in den Code einbauen. Die Skripte Datei fehlt.
+Dadurch funktioniert diese Iteration nicht und man kann nur das Menü für die Auswahl der Spielfeldgröße sehen, allerdings funktionieren die Buttons nicht.
+Lessons Learnd: Die KI neigt dazu, den Code nicht als ganzes Auszugeben und nur Fetzen auszugeben, die man in seinen eigenen Code einfügen soll. 

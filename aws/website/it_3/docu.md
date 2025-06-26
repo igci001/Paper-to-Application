@@ -25,3 +25,6 @@ Ich mache Folgendes:
 • Füge einen Start-Button ein.
 • Stelle sicher, dass rows und cols erst nach dem DOM-Layout korrekt gesetzt werden.
 • Passe das resetGame() an, um die Intervalle und das Spiel korrekt neu zu starten.
+
+
+Fazit: Anweisungen korrekt durchgeführt, Schlange funktioniert. Als nächstes neue Features hinzugügen.

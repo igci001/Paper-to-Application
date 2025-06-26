@@ -11,4 +11,6 @@ Hier ist dein überarbeiteter Code mit:
    [Hier ist der vollständige HTML-Code:]
 
 ----
-Features vorhanden, aber Gridlayout fehlt. Dynamische Größenskalierung funktioniert
+Fazit: Features vorhanden, aber Gridlayout fehlt. Dynamische Größenskalierung funktioniert
+
+Lessons Learnd: Die KI hat jetzt ohne zu Fragen das Grid-Layout entfernt. Vermutungen: Vielleicht weil im selben Codebereich etwas geändert wurde. Außerhalb der Änderungen wird der Code nicht geändert, sodass die KI bei unseren Prompts nicht den gesamten Code neu generiert, sondern nur die Codefragmente wie zu BEginn seperat als Fetzen generiert, allerdings auch an richtiger Stelle einfügt. Das könnte dazu führen, dass dann anderer Code an dieser Stelle nicht mehr berücksichtigt wird.

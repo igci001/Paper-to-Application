@@ -14,4 +14,6 @@ Hinweise:
 
 	•	Das Spielfeld und die Wände sind visuell nachempfunden, eine tatsächliche Spielmechanik (wie Snake-Steuerung oder Kollisionsabfrage) müsste mit JavaScript ergänzt werden.
 
-Möchtest du auch die Logik der Snake (Bewegung, Wachstum, Kollisionsprüfung etc.) integriert haben? 
+Möchtest du auch die Logik der Snake (Bewegung, Wachstum, Kollisionsprüfung etc.) integriert haben?
+
+Fazit: Keine Logik ist vorhanden, aber die Ui-Elemente wurden, ohne Funktionalität, umgesetzt.

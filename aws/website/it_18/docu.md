@@ -30,7 +30,9 @@ fruitEl.style.gridRow = fruit.y + 1;
 
 
 
-Probleme: Skripte nicht mit ausgegeben, diese sollten as der alten Iteration rüberkopiert werden. Das fürt dazu, dass die Schlange sich nicht mehr wirklich bewegt und an den Äpfeln stecken bleibt
+Probleme: Skripte nicht mit ausgegeben, 
 lessons learnt: ChatGPT ignoriert die Anweisung, den kompletten Code zu generieren.
 Code Snippet changes sind sehr unübersichtlich, wenn man keine Ahnung vom Coden hat.
 Zeit zur Code-Generierung: ca. 30 sec, nur Code snippet uns Text wurden erstellt
+Experiment wird abgebrochen, da kein gesammter Code generiert wird.
+Die KI erkennt und versteht das Problem wieder ohne Probleme, hat sie aber bei der Generierung vorher iggnoriert, was darauf schließen lässt, dass nur ein kleiner Code-Bereich wirklich betrachtet wird und der Rest nur rüberkopiert zu sein scheint.

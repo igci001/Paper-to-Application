@@ -14,3 +14,9 @@ Du kannst diesen Code eins zu eins in deine Datei einfügen:
 <Generierter Code>
 
 <<Generation dauert seeeeehr lange(mehrere Minuten)>>
+
+
+Fazit: Die KI hat die Anforderungen ohne Probleme umgesetzt,Keine Probleme in dieser Iteration
+
+Lessons LEarnd: Code Generierung dauert sehr lange, ca. 5 minuten. Nach dieser Iteration fangen wir an, die Zeit zu messen. 
+Rückblickend betrachtet könnte diese Lange Code-Generierung unterschiedliche Gründe haben. Zum einen wird der Code verhältnissmäßig lang (ca. 350 Lines of Code), zum anderen könnten wir an das Tageslimit für die kostenfreie Nutzung des Sprachmodells 4o gekommen sein.

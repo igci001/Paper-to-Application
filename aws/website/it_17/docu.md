@@ -9,5 +9,6 @@ Antwort 17: Hier ist der komplette HTML-Code für die neue optisch überarbeitet
 👉 Wichtig: Lege diesen Code in einen neuen Ordner it_16/ und füge den Link zur neuen Iteration in allen bestehenden index.html-Dateien im <nav>-Element hinzu.
 
 Probleme: Skripte nicht mit ausgegeben, diese sollten as der alten Iteration rüberkopiert werden. Das fürt dazu, dass die Schlange sich nicht mehr wirklich bewegt und an den Äpfeln stecken bleibt
-lessons learnt: ChatGPT ignoriert die Anweisung, den kompletten Code zu generieren.
+lessons learnt: ChatGPT ignoriert die Anweisung, den kompletten Code zu generieren. Vermutlich ist wirklich ein maximales Limit erreicht. Durch die neue Skalierung und das manuelle Kopieren der Skripte aus der alten Version führt es allerdings zu Kompatibilitätsproblemen und die Version ist nicht lauffähig
+Die KI denkt allerdings daran, uns in dieser Iteration daran zu erinnern, die Navigation in den anderen Iterationen anzupassen.
 Zeit zur Code-Generierung: ca. 1 min sek
