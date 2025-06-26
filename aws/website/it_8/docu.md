@@ -26,7 +26,15 @@ Wenn du noch zusätzliche Features wie Touch-Steuerung, Soundeffekte oder dynami
 
 **Generierung dauert mehrere Minuten**
 
-
+Fazit: Die Iteration funktioniert, aber die Größe des Spielfeldes skaliert sich nicht dynamisch mit der Fenstergröße. In diesem Schritt gibt die KI uns gute IDeen, auf die wir dann in den nächsten Iterationen näher eingehen werden.
+   Die Vorschläge hat die KI schon bei ITeration1, 2 und 5 gemacht, bei den anderen Iterationen aber nicht. 
+Lessons Learnd:
+Es ist uns nicht ersichtlich, wieso das nur manchmal gemacht wird. Die Prompts sind nicht die längsten oder kürzesten,
+Vermutungen sind:
+* Tokens sind in der Antwort noch übrig und er versucht auf ein Mindestlimit an Ausgabetokens zu kommen. 
+* Random, die Frage wird nur manchmal gestellt, um nicht zu aufdringlich zu sein
+* Die KI gibt nur Vorschläge, wenn thematisch relevante Vorschläge in der Nähe der Antwort liegen
+                     
 Promt 8.1: 
 Was genau meinst du mit „dynamische Spielfeldgrößen
 
@@ -47,6 +55,7 @@ Mit „dynamische Spielfeldgrößen“ meine ich die Möglichkeit, das Spielfeld
    ⸻
    Möchtest du, dass ich eine der Varianten einbaue oder dir den Code dafür zeige?
  
+Fazit:Zwischenpromt, keine Codeausgabe
 
 Prompt 8.2:
    Die Ideen 1 und 2 finde ich gut, die möchte ich implementieren.
@@ -60,4 +69,7 @@ Natürlich! Hier ist dein überarbeiteter HTML-Code für das Snake-Spiel mit den
 2. Einstellbare Grid-Größe: Im Startmenü und im Game-Over-Bildschirm gibt es nun einen Menüpunkt, um die Grid-Größe auszuwählen (z. B. 10×10, 20×20, 30×30).
    Hier ist der vollständige HTML-Code:
 
--> Der generierte Text ist fehlerhaft und nicht lauffähig.
+Fazit: Der generierte Text ist fehlerhaft und nicht lauffähig. 
+Lessons LEarnd, keine Folgepromts nutzen und immer den aktuellen Code neu mitgeben, sonst lässt die KI einfach Dinge weg. Außerdem haben wir zu diesem Zeitpunkt endtdeckt, dass wir bei ChatGPT permanent nach unten scrollen müssen, sodass die Code Generierung nicht außderhalb des sichtbaren Bildschirms ist. Ist dies der Fall, bricht er gerne die Generierung vorzeitig ab.
+
+

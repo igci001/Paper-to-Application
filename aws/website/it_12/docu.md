@@ -32,4 +32,11 @@ Du kannst diesen Code komplett kopieren und deinen bisherigen ersetzen
 
 Zeit für die Generierung: 6:30 min
 
-Learnings bisher: 
+Fazit, Code Generierung dauert immer länger, Der Soudeffekt wurde umgesetzt, die anderen Features nur so halb: 
+Die Anforderung für einen besser sichtbaren Schlangenkopf wurde ignoriert. 
+Außerdem gibt die KI an, die Animationen weicher gemacht zu haben, obwohl diese sich nicht geändert haben.
+Die neue Animation wird als dezent beschrieben, ist dies aber in keinster Weise. Der Apfel blinkt die ganze Zeit weiter.
+
+Lessons Learned: Unsere Anforderungen in diesem Promt waren etwas zu ungenau, und etwas vage. Daher hat die KI vermutlich die Anforderungen so umgesetzt, wie sie wollte. 
+Die gibt an, Dinge umgesetzt zu haben, die nicht stimmen und übertreibt bei der Beschreibung der neuen Features. Die KI schaltet ein neues Feature an (Animation zum Spawn), aber macht es nicht Eventgebunden oder zeitlich begrenzt. So blinkt der Apfel die ganze Zeit weiter.
+

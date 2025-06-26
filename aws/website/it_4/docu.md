@@ -17,3 +17,8 @@ Funktionen, die ich einbaue:
    • Spiel pausiert im Hintergrund
    • 5 freischaltbare Farben für Snake und Apfel, freischaltbar ab bestimmten Highscores
    • Auswahl über Klick – beim Auswählen wird die gewählte Farbe gespeichert
+
+
+Fazit: Der Shopbutton funktioniert nicht. Wenn das Spiel vorbei ist, funktioniert der Restart-Button nicht mehr
+Es gibt keinen Game-Over-Screen
+Lessons Learnd: Die KI macht alte Funktionalitäten kaputt und achtet nicht auf komplette Funktionalität. Die intakten FUnktionalitäten werden mitunter zerstört und es werden vom laten Code Fragmente weggelassen.

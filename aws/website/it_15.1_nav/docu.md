@@ -26,5 +26,6 @@ Schritt-für-Schritt (optional):
 	1.	Installiere esbuild (wenn Node.js installiert ist):
 
 
-lessons learnt: Die Seiten sind kaputter als gedacht. Es fällt allerdings erst jetzt auf, wenn mehr als ein Elemtn auf dem Screen ist.
+lessons learnt: 
+Die Ursprünglichen Iterationen, vor allem bis Iteration 7 sind nicht flexibel entwickelt worden. Die Seiten sind kaputter als gedacht. Es fällt allerdings erst jetzt auf, wenn mehr als ein Elemtn auf dem Screen ist. Das Experiment wäre in diesem Schritt auch gescheitert, da man manuell in jede Datei gehen musste, um die HTML Verlinkungen einzusetzen. Die Vorgabe ist für einen Laien vermutlich nur schwer verständlich.
 Zeit zur Code-Generierung: 30sek

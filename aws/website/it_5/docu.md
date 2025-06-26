@@ -26,3 +26,6 @@ Jetzt funktioniert:
 • Der Ingame-Shop-Button ist entfernt.
 ⸻
 Wenn du willst, kann ich dir später auch speichern, welche Farben der Spieler ausgewählt hat (z. B. mit localStorage) – sag einfach Bescheid.
+
+Fazit: Die Anforderungen wurden umgesetzt, allerdings fehlen Kern-Features, wie die Möglichkeit, ein neues Spiel zu starten, und das Spielfeld ist visuell nicht schön spielbar
+Lessons Learnd: Die KI achtet nicht von selbst darauf, das FUnktionalitäten vorhanden sind, die für uns instinktiv vorhanden sind.
