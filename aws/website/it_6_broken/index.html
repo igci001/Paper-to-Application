@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Snake Spiel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <h2>Versionen</h2>
+    <a href="../it_1/index.html">Iteration 1</a>
+    <a href="../it_2/index.html">Iteration 2</a>
+    <a href="../it_3/index.html">Iteration 3</a>
+    <a href="../it_4/index.html">Iteration 4</a>
+    <a href="../it_5/index.html">Iteration 5</a>
+    <a href="../it_6_broken/index.html">Iteration 6</a>
+    <a href="../it_7_broken/index.html">Iteration 7</a>
+    <a href="../it_8/index.html">Iteration 8</a>
+    <a href="../it_9/index.html">Iteration 9</a>
+    <a href="../it_10/index.html">Iteration 10</a>
+    <a href="../it_11/index.html">Iteration 11</a>
+    <a href="../it_12/index.html">Iteration 12</a>
+    <a href="../it_13/index.html">Iteration 13</a>
+    <a href="../it_14/index.html">Iteration 14</a>
+    <a href="../it_15/index.html">Iteration 15</a>
+    <a href="../it_16/index.html">Iteration 16</a>
+    <a href="../it_17/index.html">Iteration 17</a>
+    <a href="../it_18/index.html">Iteration 18</a>
+
+  </nav>
+  <div id="startMenu">
+    <h1>Snake</h1>
+    <button onclick="showSizeSelection()">Spielen</button>
+    <button onclick="openShop()">Shop</button>
+  </div>
+
+  <div id="sizeSelection">
+    <button onclick="startGame(20)">20x20</button>
+    <button onclick="startGame(30)">30x30</button>
+    <button onclick="startGame(50)">50x50</button>
+  </div>
+
+  <div class="top-bar">
+    <div>
+      Highscore: <span id="highscore">0</span> | Score: <span id="score">0</span>
+    </div>
+  </div>
+
+  <div id="snakeArea" class="snake-area"></div>
+
+  <div id="gameOverScreen">
+    <h2>Game Over</h2>
+    <p>Score: <span id="finalScore"></span></p>
+    <p>Highscore: <span id="finalHighscore"></span></p>
+    <button onclick="restartGame()">Neustart</button>
+    <button onclick="showSizeSelection()">Neues Spiel</button>
+    <button onclick="openShop()">Shop</button>
+  </div>
+
+  <div id="shop">
+    <h2>Shop</h2>
+    <h3>Schlangenfarben</h3>
+    <div id="snakeColors" class="color-container"></div>
+    <h3>Apfelfarben</h3>
+    <div id="fruitColors" class="color-container"></div>
+    <button onclick="closeShop()">Zurück</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
